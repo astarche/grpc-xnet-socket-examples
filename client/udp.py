@@ -1,4 +1,4 @@
-"""Example XNET Automotive Ethernet client using loopback TCP over IPv4."""
+"""Example XNET Automotive Ethernet client using UDP over IPv4 with 2 ENET ports."""
 
 import click
 import xnetgrpc.nixnetsocket_pb2 as xnetsocket
@@ -113,7 +113,7 @@ def _create_ip_mreq_sock_opt_data(
     prompt="Grpc-device server",
     help="Address of the XNET device running grpc-device server.",
 )
-def _loopback(server: str):
+def _udp(server: str):
     with grpc_device_session(server) as client:
         enet1 = raise_if_error(
             client.IpStackCreate(xnetsocket.IpStackCreateRequest(config=ENET1_CONFIG))
@@ -183,4 +183,4 @@ def _loopback(server: str):
 
 
 if __name__ == "__main__":
-    _loopback()
+    _udp()
