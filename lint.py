@@ -1,6 +1,6 @@
 """Lint the client."""
-from os import system
+from subprocess import run
 
-system(rf"poetry run mypy client --check-untyped-defs")
+run(rf"mypy client --check-untyped-defs", shell=True, check=True)
 
-system(rf"poetry run ni-python-styleguide lint client")
+run(rf"ni-python-styleguide lint client", shell=True, check=True)
