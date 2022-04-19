@@ -4,51 +4,80 @@ isort:skip_file
 """
 import abc
 import grpc
-from . import session_pb2
+import session_pb2
 
 class SessionUtilitiesStub:
+    def __init__(self, channel: grpc.Channel) -> None: ...
+    EnumerateDevices: grpc.UnaryUnaryMultiCallable[
+        session_pb2.EnumerateDevicesRequest,
+        session_pb2.EnumerateDevicesResponse]
+    """Provides a list of devices or chassis connected to server under localhost"""
 
-    def __init__(self, channel: grpc.Channel) -> None:
-        ...
-    EnumerateDevices: grpc.UnaryUnaryMultiCallable[session_pb2.EnumerateDevicesRequest, session_pb2.EnumerateDevicesResponse]
-    'Provides a list of devices or chassis connected to server under localhost'
-    Reserve: grpc.UnaryUnaryMultiCallable[session_pb2.ReserveRequest, session_pb2.ReserveResponse]
-    'Reserve a set of client defined resources for exclusive use'
-    IsReservedByClient: grpc.UnaryUnaryMultiCallable[session_pb2.IsReservedByClientRequest, session_pb2.IsReservedByClientResponse]
-    'Determines if a set of client defined resources is currently reserved by a\n    specific client\n    '
-    Unreserve: grpc.UnaryUnaryMultiCallable[session_pb2.UnreserveRequest, session_pb2.UnreserveResponse]
-    'Unreserves a previously reserved resource'
-    ResetServer: grpc.UnaryUnaryMultiCallable[session_pb2.ResetServerRequest, session_pb2.ResetServerResponse]
-    'Resets the server to a default state with no open sessions'
+    Reserve: grpc.UnaryUnaryMultiCallable[
+        session_pb2.ReserveRequest,
+        session_pb2.ReserveResponse]
+    """Reserve a set of client defined resources for exclusive use"""
+
+    IsReservedByClient: grpc.UnaryUnaryMultiCallable[
+        session_pb2.IsReservedByClientRequest,
+        session_pb2.IsReservedByClientResponse]
+    """Determines if a set of client defined resources is currently reserved by a
+    specific client
+    """
+
+    Unreserve: grpc.UnaryUnaryMultiCallable[
+        session_pb2.UnreserveRequest,
+        session_pb2.UnreserveResponse]
+    """Unreserves a previously reserved resource"""
+
+    ResetServer: grpc.UnaryUnaryMultiCallable[
+        session_pb2.ResetServerRequest,
+        session_pb2.ResetServerResponse]
+    """Resets the server to a default state with no open sessions"""
+
 
 class SessionUtilitiesServicer(metaclass=abc.ABCMeta):
-
     @abc.abstractmethod
-    def EnumerateDevices(self, request: session_pb2.EnumerateDevicesRequest, context: grpc.ServicerContext) -> session_pb2.EnumerateDevicesResponse:
+    def EnumerateDevices(self,
+        request: session_pb2.EnumerateDevicesRequest,
+        context: grpc.ServicerContext,
+    ) -> session_pb2.EnumerateDevicesResponse:
         """Provides a list of devices or chassis connected to server under localhost"""
         pass
 
     @abc.abstractmethod
-    def Reserve(self, request: session_pb2.ReserveRequest, context: grpc.ServicerContext) -> session_pb2.ReserveResponse:
+    def Reserve(self,
+        request: session_pb2.ReserveRequest,
+        context: grpc.ServicerContext,
+    ) -> session_pb2.ReserveResponse:
         """Reserve a set of client defined resources for exclusive use"""
         pass
 
     @abc.abstractmethod
-    def IsReservedByClient(self, request: session_pb2.IsReservedByClientRequest, context: grpc.ServicerContext) -> session_pb2.IsReservedByClientResponse:
+    def IsReservedByClient(self,
+        request: session_pb2.IsReservedByClientRequest,
+        context: grpc.ServicerContext,
+    ) -> session_pb2.IsReservedByClientResponse:
         """Determines if a set of client defined resources is currently reserved by a
         specific client
         """
         pass
 
     @abc.abstractmethod
-    def Unreserve(self, request: session_pb2.UnreserveRequest, context: grpc.ServicerContext) -> session_pb2.UnreserveResponse:
+    def Unreserve(self,
+        request: session_pb2.UnreserveRequest,
+        context: grpc.ServicerContext,
+    ) -> session_pb2.UnreserveResponse:
         """Unreserves a previously reserved resource"""
         pass
 
     @abc.abstractmethod
-    def ResetServer(self, request: session_pb2.ResetServerRequest, context: grpc.ServicerContext) -> session_pb2.ResetServerResponse:
+    def ResetServer(self,
+        request: session_pb2.ResetServerRequest,
+        context: grpc.ServicerContext,
+    ) -> session_pb2.ResetServerResponse:
         """Resets the server to a default state with no open sessions"""
         pass
 
-def add_SessionUtilitiesServicer_to_server(servicer: SessionUtilitiesServicer, server: grpc.Server) -> None:
-    ...
+
+def add_SessionUtilitiesServicer_to_server(servicer: SessionUtilitiesServicer, server: grpc.Server) -> None: ...
